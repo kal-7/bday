@@ -22,7 +22,7 @@
 
     .container {
       display: flex;
-      width: 300vw;
+      width: 400vw;
       height: 100vh;
       transition: transform 0.6s ease-in-out;
     }
@@ -31,36 +31,54 @@
       flex: 0 0 100vw;
       height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: #fff;
+      background-color: #e0f7fa; /* Light shade of blue */
     }
 
     .slide img {
-      width: 300px;
-      height: auto;
-      border: 5px solid #fff;
-      border-radius: 10px;
-      margin-bottom: 20px;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
 
-    .slide1 { background: linear-gradient(to right, #b71c1c, #fbc02d); }
-    .slide2 { background: linear-gradient(to right, #fbc02d, #b71c1c); }
-    .slide3 { background: linear-gradient(to right, #b71c1c, #fbc02d); }
+    .slide4 {
+      flex-direction: column;
+      color: #000;
+    }
 
     .content {
       text-align: center;
       max-width: 600px;
+      z-index: 11;
     }
 
     .content h1 {
-      font-size: 2.5em;
+      font-size: 2em;
       margin-bottom: 10px;
     }
 
     .content p {
-      font-size: 1.2em;
+      font-size: 1.1em;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+
+    form button {
+      background-color: #00796b;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
 
     .overlay {
@@ -76,27 +94,26 @@
 </head>
 <body>
   <div class="slider-wrapper">
-    <div class="overlay" onclick="nextSlide()"></div>
+    <div id="overlay" class="overlay" onclick="nextSlide()"></div>
     <div id="slider" class="container">
       <div class="slide slide1">
         <img src="https://raw.githubusercontent.com/kal-7/bday/main/1.png" alt="Birthday 1">
-        <div class="content">
-          <h1>Happy Birthday!</h1>
-          <p>Wishing you a day filled with love, laughter, and happiness.</p>
-        </div>
       </div>
       <div class="slide slide2">
         <img src="https://raw.githubusercontent.com/kal-7/bday/main/2.png" alt="Birthday 2">
-        <div class="content">
-          <h1>Celebrate in Style</h1>
-          <p>May your birthday be as special and fabulous as you are!</p>
-        </div>
       </div>
       <div class="slide slide3">
         <img src="https://raw.githubusercontent.com/kal-7/bday/main/3.png" alt="Birthday 3">
+      </div>
+      <div class="slide slide4">
         <div class="content">
-          <h1>Best Wishes</h1>
-          <p>Here’s to a bright, healthy, and exciting future. Happy Birthday!</p>
+          <h1>Send Your Wishes</h1>
+          <p>Leave a heartfelt message and we'll pass it along!</p>
+          <form action="mailto:kalyanchokkam12@gmail.com" method="post" enctype="text/plain" onfocusin="disableOverlay()" onfocusout="maybeEnableOverlay(event)">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <textarea name="message" rows="4" placeholder="Your Birthday Wish..." required></textarea>
+            <button type="submit">Send Wish</button>
+          </form>
         </div>
       </div>
     </div>
@@ -105,10 +122,13 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script>
     let currentSlide = 0;
+    const overlay = document.getElementById('overlay');
+
     function nextSlide() {
-      currentSlide = (currentSlide + 1) % 3;
+      currentSlide = (currentSlide + 1) % 4;
       document.getElementById('slider').style.transform = `translateX(-${currentSlide * 100}vw)`;
       launchConfetti();
+      overlay.style.display = (currentSlide === 3) ? 'none' : 'block';
     }
 
     function launchConfetti() {
@@ -118,6 +138,16 @@
         origin: { y: 0.6 },
         colors: ['#fbc02d', '#b71c1c', '#ffffff']
       });
+    }
+
+    function disableOverlay() {
+      overlay.style.display = 'none';
+    }
+
+    function maybeEnableOverlay(event) {
+      if (!event.currentTarget.contains(document.activeElement)) {
+        if (currentSlide !== 3) overlay.style.display = 'block';
+      }
     }
   </script>
 </body>
