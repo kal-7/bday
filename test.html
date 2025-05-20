@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Birthday Wishes</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("a1V9GHG77mUCE2nNi"); // Replace with your actual public key
+    })();
+  </script>
   <style>
     body, html {
       margin: 0;
@@ -22,9 +28,9 @@
 
     .container {
       display: flex;
-      width: 400vw;
+      width: 1400vw;
       height: 100vh;
-      transition: transform 0.6s ease-in-out;
+      transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
     }
 
     .slide {
@@ -33,16 +39,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #e0f7fa; /* Light shade of blue */
+      background-color: #e0f7fa;
+      padding: 40px;
+      box-sizing: border-box;
+      position: relative;
     }
 
     .slide img {
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
-    .slide4 {
+    .slide-form {
       flex-direction: column;
       color: #000;
     }
@@ -90,26 +101,78 @@
       cursor: pointer;
       z-index: 10;
     }
+
+    .nav-buttons {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 40px;
+      box-sizing: border-box;
+      z-index: 15;
+    }
+
+    .nav-buttons button {
+      background-color: #00796b;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <div class="slider-wrapper">
     <div id="overlay" class="overlay" onclick="nextSlide()"></div>
     <div id="slider" class="container">
-      <div class="slide slide1">
+      <div class="slide">
         <img src="https://raw.githubusercontent.com/kal-7/bday/main/1.png" alt="Birthday 1">
       </div>
-      <div class="slide slide2">
+      <div class="slide">
         <img src="https://raw.githubusercontent.com/kal-7/bday/main/2.png" alt="Birthday 2">
       </div>
-      <div class="slide slide3">
+      <div class="slide">
         <img src="https://raw.githubusercontent.com/kal-7/bday/main/3.png" alt="Birthday 3">
       </div>
-      <div class="slide slide4">
+      <div class="slide">
+        <img src="https://raw.githubusercontent.com/kal-7/bday/main/4.png" alt="Birthday 4">
+      </div>
+      <div class="slide">
+        <img src="https://raw.githubusercontent.com/kal-7/bday/main/5.png" alt="Birthday 5">
+      </div>
+      <div class="slide">
+        <img src="https://raw.githubusercontent.com/kal-7/bday/main/6.png" alt="Birthday 6">
+      </div>
+      <div class="slide">
+        <img src="https://raw.githubusercontent.com/kal-7/bday/main/7.png" alt="Birthday 7">
+      </div>
+      <div class="slide">
+        <img src="https://raw.githubusercontent.com/kal-7/bday/main/8.png" alt="Birthday 8">
+      </div>
+      <div class="slide">
+        <img src="https://raw.githubusercontent.com/kal-7/bday/main/9.png" alt="Birthday 9">
+      </div>
+      <div class="slide">
+        <img src="https://raw.githubusercontent.com/kal-7/bday/main/10.png" alt="Birthday 10">
+      </div>
+      <div class="slide">
+        <img src="https://raw.githubusercontent.com/kal-7/bday/main/11.png" alt="Birthday 11">
+      </div>
+      <div class="slide">
+        <img src="https://raw.githubusercontent.com/kal-7/bday/main/12.png" alt="Birthday 12">
+      </div>
+      <div class="slide">
+        <img src="https://raw.githubusercontent.com/kal-7/bday/main/13.png" alt="Birthday 13">
+      </div>
+
+      <div class="slide slide-form">
         <div class="content">
           <h1>Send Your Wishes</h1>
           <p>Leave a heartfelt message and we'll pass it along!</p>
-          <form action="mailto:kalyanchokkam12@gmail.com" method="post" enctype="text/plain" onfocusin="disableOverlay()" onfocusout="maybeEnableOverlay(event)">
+          <form id="wishForm" onsubmit="sendWish(event)" onfocusin="disableOverlay()" onfocusout="maybeEnableOverlay(event)">
             <input type="text" name="name" placeholder="Your Name" required>
             <textarea name="message" rows="4" placeholder="Your Birthday Wish..." required></textarea>
             <button type="submit">Send Wish</button>
@@ -117,27 +180,30 @@
         </div>
       </div>
     </div>
+    <div class="nav-buttons">
+      <button onclick="prevSlide()">⟵</button>
+      <button onclick="nextSlide()">⟶</button>
+    </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script>
     let currentSlide = 0;
+    const totalSlides = 14;
     const overlay = document.getElementById('overlay');
 
     function nextSlide() {
-      currentSlide = (currentSlide + 1) % 4;
-      document.getElementById('slider').style.transform = `translateX(-${currentSlide * 100}vw)`;
-      launchConfetti();
-      overlay.style.display = (currentSlide === 3) ? 'none' : 'block';
+      currentSlide = (currentSlide + 1) % totalSlides;
+      updateSlide();
     }
 
-    function launchConfetti() {
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#fbc02d', '#b71c1c', '#ffffff']
-      });
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      updateSlide();
+    }
+
+    function updateSlide() {
+      document.getElementById('slider').style.transform = `translateX(-${currentSlide * 100}vw)`;
+      overlay.style.display = (currentSlide === 13) ? 'none' : 'block';
     }
 
     function disableOverlay() {
@@ -146,8 +212,25 @@
 
     function maybeEnableOverlay(event) {
       if (!event.currentTarget.contains(document.activeElement)) {
-        if (currentSlide !== 3) overlay.style.display = 'block';
+        if (currentSlide !== 13) overlay.style.display = 'block';
       }
+    }
+
+    function sendWish(event) {
+      event.preventDefault();
+      const form = document.getElementById('wishForm');
+      const name = form.name.value;
+      const message = form.message.value;
+
+      emailjs.send("service_lrr80pf", "template_qdxtz6g", {
+        name: name,
+        message: message
+      }).then(function(response) {
+        alert("Wish sent successfully!");
+        form.reset();
+      }, function(error) {
+        alert("Failed to send wish. Please try again.");
+      });
     }
   </script>
 </body>
