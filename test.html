@@ -7,7 +7,7 @@
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
     (function(){
-      emailjs.init("a1V9GHG77mUCE2nNi"); // Replace with your actual public key
+      emailjs.init("YOUR_PUBLIC_KEY_HERE"); // Replace with your actual public key
     })();
   </script>
   <style>
@@ -29,7 +29,7 @@
 
     .container {
       display: flex;
-      width: 1400vw;
+      width: 1500vw;
       height: 100vh;
       transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
     }
@@ -52,16 +52,16 @@
     @keyframes fadeInSlide {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(20px) scale(0.95);
       }
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
       }
     }
 
     .slide img {
-      max-height: 80vh;
+      max-height: 70vh;
       width: auto;
       object-fit: contain;
       border-radius: 12px;
@@ -76,17 +76,17 @@
 
     .content {
       text-align: center;
-      max-width: 600px;
+      max-width: 90vw;
       z-index: 11;
     }
 
     .content h1 {
-      font-size: 2em;
+      font-size: 1.5em;
       margin-bottom: 10px;
     }
 
     .content p {
-      font-size: 1.1em;
+      font-size: 1em;
     }
 
     form input, form textarea {
@@ -124,7 +124,7 @@
       width: 100%;
       display: flex;
       justify-content: space-between;
-      padding: 0 40px;
+      padding: 0 20px;
       box-sizing: border-box;
       z-index: 15;
     }
@@ -133,10 +133,27 @@
       background-color: #00796b;
       color: #fff;
       border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
+      padding: 10px 15px;
+      border-radius: 50%;
       font-size: 1.5em;
       cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        width: 1500vw;
+        height: 100vh;
+      }
+
+      .slide img {
+        max-height: 60vh;
+        max-width: 90vw;
+      }
+
+      .nav-buttons button {
+        padding: 8px 12px;
+        font-size: 1.2em;
+      }
     }
   </style>
 </head>
@@ -183,6 +200,9 @@
       <div class="slide">
         <img src="https://raw.githubusercontent.com/kal-7/bday/main/13.png" alt="Birthday 13">
       </div>
+      <div class="slide">
+        <img src="https://raw.githubusercontent.com/kal-7/bday/main/14.png" alt="Birthday 14">
+      </div>
 
       <div class="slide slide-form">
         <div class="content">
@@ -204,7 +224,7 @@
 
   <script>
     let currentSlide = 0;
-    const totalSlides = 14;
+    const totalSlides = 15;
     const overlay = document.getElementById('overlay');
 
     function nextSlide() {
@@ -219,7 +239,7 @@
 
     function updateSlide() {
       document.getElementById('slider').style.transform = `translateX(-${currentSlide * 100}vw)`;
-      overlay.style.display = (currentSlide === 13) ? 'none' : 'block';
+      overlay.style.display = (currentSlide === 14) ? 'none' : 'block';
     }
 
     function disableOverlay() {
@@ -228,7 +248,7 @@
 
     function maybeEnableOverlay(event) {
       if (!event.currentTarget.contains(document.activeElement)) {
-        if (currentSlide !== 13) overlay.style.display = 'block';
+        if (currentSlide !== 14) overlay.style.display = 'block';
       }
     }
 
