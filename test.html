@@ -29,7 +29,7 @@
 
     .container {
       display: flex;
-      width: 1500vw;
+      width: 1600vw;
       height: 100vh;
       transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
     }
@@ -141,7 +141,7 @@
 
     @media (max-width: 768px) {
       .container {
-        width: 1500vw;
+        width: 1600vw;
         height: 100vh;
       }
 
@@ -150,14 +150,9 @@
         max-width: 90vw;
       }
 
-      .nav-buttons {
-        padding: 0 10px;
-      }
-
       .nav-buttons button {
-        padding: 10px;
-        font-size: 1.5em;
-        display: block;
+        padding: 12px 15px;
+        font-size: 1.8em;
       }
     }
   </style>
@@ -166,7 +161,31 @@
   <div class="slider-wrapper">
     <div id="overlay" class="overlay" onclick="nextSlide()"></div>
     <div id="slider" class="container">
-      <!-- Slides omitted for brevity -->
+      <div class="slide"><img src="https://raw.githubusercontent.com/kal-7/bday/main/1.png" alt="Birthday 1"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/kal-7/bday/main/2.png" alt="Birthday 2"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/kal-7/bday/main/3.png" alt="Birthday 3"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/kal-7/bday/main/4.png" alt="Birthday 4"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/kal-7/bday/main/5.png" alt="Birthday 5"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/kal-7/bday/main/6.png" alt="Birthday 6"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/kal-7/bday/main/7.png" alt="Birthday 7"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/kal-7/bday/main/8.png" alt="Birthday 8"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/kal-7/bday/main/9.png" alt="Birthday 9"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/kal-7/bday/main/10.png" alt="Birthday 10"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/kal-7/bday/main/11.png" alt="Birthday 11"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/kal-7/bday/main/12.png" alt="Birthday 12"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/kal-7/bday/main/13.png" alt="Birthday 13"></div>
+      <div class="slide"><img src="https://raw.githubusercontent.com/kal-7/bday/main/14.png" alt="Birthday 14"></div>
+      <div class="slide slide-form">
+        <div class="content">
+          <h1>Send Your Wishes</h1>
+          <p>Leave a heartfelt message and we'll pass it along!</p>
+          <form id="wishForm" onsubmit="sendWish(event)" onfocusin="disableOverlay()" onfocusout="maybeEnableOverlay(event)">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <textarea name="message" rows="4" placeholder="Your Birthday Wish..." required></textarea>
+            <button type="submit">Send Wish</button>
+          </form>
+        </div>
+      </div>
     </div>
     <div class="nav-buttons">
       <button onclick="prevSlide()">⟵</button>
@@ -176,7 +195,7 @@
 
   <script>
     let currentSlide = 0;
-    const totalSlides = 15;
+    const totalSlides = 16;
     const overlay = document.getElementById('overlay');
 
     function nextSlide() {
@@ -191,7 +210,7 @@
 
     function updateSlide() {
       document.getElementById('slider').style.transform = `translateX(-${currentSlide * 100}vw)`;
-      overlay.style.display = (currentSlide === 14) ? 'none' : 'block';
+      overlay.style.display = (currentSlide === 15) ? 'none' : 'block';
     }
 
     function disableOverlay() {
@@ -200,7 +219,7 @@
 
     function maybeEnableOverlay(event) {
       if (!event.currentTarget.contains(document.activeElement)) {
-        if (currentSlide !== 14) overlay.style.display = 'block';
+        if (currentSlide !== 15) overlay.style.display = 'block';
       }
     }
 
