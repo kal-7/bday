@@ -235,6 +235,10 @@
       const name = form.name.value;
       const message = form.message.value;
 
+      if (!name || !message) {
+        alert("Please fill in both your name and message.");
+        return;
+      }
       emailjs.send("service_lrr80pf", "template_qdxtz6g", {
         name: name,
         message: message
