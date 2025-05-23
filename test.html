@@ -7,7 +7,7 @@
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script>
     (function(){
-      emailjs.init("a1V9GHG77mUCE2nNi"); // Replace with your actual public key
+      emailjs.init("rk_uV-5LVhEFjW6DG"); // Replace with your actual public key
     })();
   </script>
   <style>
@@ -175,6 +175,7 @@
             <textarea name="message" rows="4" placeholder="Your Birthday Wish..." required></textarea>
             <button type="submit">Send Wish</button>
             <button type="button" onclick="goToFirstSlide()" >Start Over</button>
+            <div class="loader" style="display: none;" id="loader">Sending Wishes...</div>
           </form>
         </div>
       </div>
@@ -239,14 +240,17 @@
         alert("Please fill in both your name and message.");
         return;
       }
-      emailjs.send("service_lrr80pf", "template_qdxtz6g", {
+      loader.style.display = 'block';
+      emailjs.send("service_0im1d8o","template_o32tpxf", {
         name: name,
         message: message
       }).then(function(response) {
         alert("Wish sent successfully!");
         form.reset();
+        loader.style.display = 'none';
       }, function(error) {
         alert("Failed to send wish. Please try again.");
+        loader.style.display = 'none';
       });
     }
   </script>
